@@ -13,18 +13,18 @@ function CadastroCategoria() {
   const [values, setValues] = useState(valoresIniciais);
 
 
-  function setValue(key, value) {
+  function setValue(chave, valor) {
+    // chave: nome, descricao, bla, bli
     setValues({
       ...values,
-      [key]: value, //nome: 'valor'
-    });
+      [chave]: valor, // nome: 'valor'
+    })
   }
 
   function handleChange(infosDoEvento) {
-    const { getAttribute, value } = infosDoEvento.target;
     setValue(
-      getAttribute('name'),
-      value
+      infosDoEvento.target.getAttribute('name'),
+      infosDoEvento.target.value
     );
   }
 
@@ -33,13 +33,13 @@ function CadastroCategoria() {
       <h1>Cadastro de Categoria: {values.nome}</h1>
 
       <form onSubmit={function handleSubmit(infosDoEvento) {
-        infosDoEvento.preventDefault();
-        setCategorias([
-          ...categorias,
-          values
-        ]);
+          infosDoEvento.preventDefault();
+          setCategorias([
+            ...categorias,
+            values
+          ]);
 
-        setValues(valoresIniciais)
+          setValues(valoresIniciais)
       }}>
 
         <FormField
@@ -47,10 +47,17 @@ function CadastroCategoria() {
           type="text"
           name="nome"
           value={values.nome}
-          onchange={handleChange}
+          onChange={handleChange}
         />
 
-        <div>
+        <FormField
+          label="Descrição"
+          type="????"
+          name="descricao"
+          value={values.descricao}
+          onChange={handleChange}
+        />
+        {/* <div>
           <label>
             Descrição:
             <textarea
@@ -60,17 +67,16 @@ function CadastroCategoria() {
               onChange={handleChange}
             />
           </label>
-        </div>
+        </div> */}
 
         <FormField
           label="Cor"
           type="color"
           name="cor"
           value={values.cor}
-          onchange={handleChange}
+          onChange={handleChange}
         />
-
-        {/*          <div>
+        {/* <div>
           <label>
             Cor:
             <input
@@ -80,21 +86,22 @@ function CadastroCategoria() {
               onChange={handleChange}
             />
           </label>
-        </div>
- */}
+        </div> */}
+
         <button>
           Cadastrar
         </button>
       </form>
+      
 
       <ul>
-        {categorias.map((categoria, index) => {
+        {categorias.map((categoria, indice) => {
           return (
-            <li key={`${categoria}${index}`}>
+            <li key={`${categoria}${indice}`}>
               {categoria.nome}
             </li>
           )
-        })};
+        })}
       </ul>
 
       <Link to="/">
